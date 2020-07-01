@@ -132,15 +132,15 @@ function App() {
         return
       }
       provider.on("close", () => resetApp(web3));
-      provider.on("accountsChanged", async (accounts: string[]) => {
+      provider.on("accountsChanged", async (accounts) => {
         setAddress(accounts[0])
       });
-      provider.on("chainChanged", async (chainId: number) => {
+      provider.on("chainChanged", async (chainId) => {
         const networkId = await web3.eth.net.getId()
         setChainId(chainId)
         setNetworkId(networkId)
       });
-      provider.on("networkChanged", async (networkId: number) => {
+      provider.on("networkChanged", async (networkId) => {
         const chainId = await web3.eth.chainId();
         setChainId(chainId)
         setNetworkId(networkId)
@@ -177,8 +177,9 @@ function App() {
   },[])
 
   //This will run every rerender of App. Intentional.
-  const time = Date.UTC(2020,6,2,14,0,0,0)
-  let isActive = true
+  const time = Date.UTC(2020,6,2,13,30,0,0)
+  console.log(time)
+  let isActive = false
   if (Date.now() > time )
     isActive = true
 
@@ -199,6 +200,15 @@ function App() {
           }
         </Flex>
         <Box width="90vw" height="1px" bg="gray.700" ml="auto" mr="auto" mt="10px" mb="10px"></Box>
+        { isActive ?
+          (<>
+
+          </>) :
+          (<Box mt="30vh">
+            <Text ml="auto" mr="auto" textAlign="center" fontSize="sm">presale opens in</Text>
+            <CountDown expiryTimestamp={time}  />
+          </Box>)
+        }
       </Box>
       <Box w="100%" minH="100px" bg="gray.800" color="gray.200" position="relative"  p="20px" pt="80px" textAlign="center" fontSize={{base:"sm", md:"md"}} >
         <Link color="gray.600" m="5px" display="inline-block" href={"https://etherscan.io/address/"+addresses.askoToken}>Token SC</Link>
