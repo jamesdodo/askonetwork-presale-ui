@@ -102,7 +102,6 @@ function App() {
   const [isDepositActive, setIsDepositActive] = useState(true)
   const [isRedeemActive, setIsRedeemActive] = useState(false)
   const [isUniswapSendActive, setIsUniswapSendActive] = useState(false)
-  const [userRedeemable, setUserRedeemable] = useState("0")
 
   const [uniswapAsko, setUniswapAsko] = useState("24000000")
   const [presaleAsko, setPresaleAsko] = useState("40000000")
@@ -268,16 +267,12 @@ function App() {
           )
         )
       )
-      setRemainingDeposit(
-        web3.utils.toBN(web3.utils.toWei("200","ether"))
-        .sub(web3.utils.toBN(totalPresaleEtherDeposited))
-      )
       setAccountDeposit(accountDeposit)
       setIsWhitelisted(isWhitelisted)
 
       if(web3.utils.toWei("200","ether").toString() == totalPresaleEtherDeposited.toString()){
         //presale ended
-        setIsRedeemActive(false)
+        setIsDepositActive(false)
         if(!hasSentToUniswap){
           setIsUniswapSendActive(true)
         }else{
