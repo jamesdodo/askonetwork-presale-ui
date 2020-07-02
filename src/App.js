@@ -261,9 +261,11 @@ function App() {
       setDevfundEther(web3.utils.fromWei(devfundEther))
       setPctSoldOut(
         Math.floor(
-          web3.utils.toBN(web3.utils.fromWei(totalPresaleEtherDeposited))
-          .mul(web3.utils.toBN("100"))
-          .div(web3.utils.toBN("200")).toNumber()
+          web3.utils.fromWei(
+            web3.utils.toBN(totalPresaleEtherDeposited)
+            .mul(web3.utils.toBN(web3.utils.toWei("100")))
+            .div(web3.utils.toBN(web3.utils.toWei("200")))
+          )
         )
       )
       setRemainingDeposit(
