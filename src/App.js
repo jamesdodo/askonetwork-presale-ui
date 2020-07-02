@@ -109,7 +109,7 @@ function App() {
   const [buybackEther, setBuybackEther] = useState("0")
   const [devfundEther, setDevfundEther] = useState("0")
   const [pctSoldOut, setPctSoldOut] = useState("0")
-  const [remainingDeposit, setRemainingDeposit] = useState("0")
+  const [totalPresaleEtherDeposited, setTotalPresaleEtherDeposited] = useState("0")
 
   const [accountDeposit, setAccountDeposit] = useState("0")
   const [isWhitelisted, setIsWhitelisted] = useState(false)
@@ -258,6 +258,8 @@ function App() {
       setUniswapEther(web3.utils.fromWei(uniswapEther))
       setBuybackEther(web3.utils.fromWei(buybackEther))
       setDevfundEther(web3.utils.fromWei(devfundEther))
+      setTotalPresaleEtherDeposited(totalPresaleEtherDeposited)
+      setAccountDeposit(accountDeposit)
       setPctSoldOut(
         Math.floor(
           web3.utils.fromWei(
@@ -267,7 +269,6 @@ function App() {
           )
         )
       )
-      setAccountDeposit(accountDeposit)
       setIsWhitelisted(isWhitelisted)
 
       if(web3.utils.toWei("200","ether").toString() == totalPresaleEtherDeposited.toString()){
@@ -287,7 +288,7 @@ function App() {
     if(window.web3){
       interval = setInterval(()=>{
         fetchData(web3,address,askoTokenSC,askoPresaleSC)
-      },500)
+      },1500)
     }else{
       interval = setInterval(()=>{
         fetchData(web3,address,askoTokenSC,askoPresaleSC)
@@ -344,6 +345,16 @@ function App() {
                 <NumberDecrementStepper onClick={()=>{(depositValue>=1) ? setDepositValue(depositValue-1) : setDepositValue(0)}} />
               </NumberInputStepper>
               </NumberInput>
+              <Button fontSize="xs" color="gray.300" isDisabled={!isDepositActive} display="inline-block"  bg="gray.700" fg="gray.300" p="0px" h="25px" w="25px" m="10px" minWidth="0px" mb="12px" onClick={()=>{
+                if(!web3) return
+                const accountRemaining = web3.utils.toBN(web3.utils.toWei("5")).sub(web3.utils.toBN(accountDeposit))
+                const totalReamaining = web3.utils.toBN(web3.utils.toWei("200")).sub(web3.utils.toBN(totalPresaleEtherDeposited))
+                if(accountRemaining <= totalReamaining){
+                  setDepositValue(web3.utils.fromWei(accountRemaining))
+                }else{
+                  setDepositValue(web3.utils.fromWei(totalReamaining))
+                }
+              }}>ᐱ</Button>
               <Button color="gray.300" isDisabled={!isDepositActive} display="block" ml="auto" mr="auto" onClick={handleDeposit} bg="green.700" fg="gray.200">Deposit</Button>
               <Text color="gray.300" display="block" fontSize="sm" p="10px" pb="0px" mb="10px" textAlign="center">
                 {(depositValue <= 5 && depositValue > 0 ) ?
@@ -353,6 +364,9 @@ function App() {
                     Invalid. Must be between 0 and 5 ether.
                   </>)
                 }
+              </Text>
+              <Text m="10px" color="gray.600"  ml="auto" mr="auto" textAlign="center" fontSize="sm">
+                you have deposited <Text fontSize="md" color="gray.500" display="inline">{Number(web3.utils.fromWei(accountDeposit)).toPrecision(3)}</Text> ether of 5 max.
               </Text>
             </Box>
             <Box width="250px" height="1px" bg="gray.700" ml="auto" mr="auto" mt="10px" mb="10px"></Box>
