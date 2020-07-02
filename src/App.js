@@ -362,7 +362,7 @@ function App() {
               )}
               <Button isDisabled={!isRedeemActive} display="block" ml="auto" mr="auto" onClick={handleRedeem} bg="teal.700" fg="gray.200">Redeem</Button>
               <Text color="gray.300" display="block" fontSize="sm" p="10px" pb="0px" mb="20px" textAlign="center">
-                {web3.utils.toBN(web3.utils.fromWei(accountDeposit)).toNumber()*200000} ASKO
+                {web3.utils.fromWei(web3.utils.toBN(accountDeposit).mul(web3.utils.toBN("200000")))} ASKO
               </Text>
             </Box>
             <Box width="250px" height="1px" bg="gray.700" ml="auto" mr="auto" mt="10px" mb="10px"></Box>
