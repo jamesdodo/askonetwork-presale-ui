@@ -347,6 +347,7 @@ function App() {
               </NumberInput>
               <Button fontSize="xs" color="gray.300" isDisabled={!isDepositActive} display="inline-block"  bg="gray.700" fg="gray.300" p="0px" h="25px" w="25px" m="10px" minWidth="0px" mb="12px" onClick={()=>{
                 if(!web3) return
+                if(!address) return
                 const accountRemaining = web3.utils.toBN(web3.utils.toWei("5")).sub(web3.utils.toBN(accountDeposit))
                 const totalReamaining = web3.utils.toBN(web3.utils.toWei("200")).sub(web3.utils.toBN(totalPresaleEtherDeposited))
                 if(accountRemaining <= totalReamaining){
