@@ -350,7 +350,7 @@ function App() {
                 if(!address) return
                 const accountRemaining = web3.utils.toBN(web3.utils.toWei("5")).sub(web3.utils.toBN(accountDeposit))
                 const totalReamaining = web3.utils.toBN(web3.utils.toWei("200")).sub(web3.utils.toBN(totalPresaleEtherDeposited))
-                if(accountRemaining <= totalReamaining){
+                if(accountRemaining.lte(totalReamaining)){
                   setDepositValue(web3.utils.fromWei(accountRemaining))
                 }else{
                   setDepositValue(web3.utils.fromWei(totalReamaining))
