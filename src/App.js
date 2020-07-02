@@ -29,7 +29,7 @@ import Footer from "./components/Footer"
 import Header from "./components/Header"
 
 
-const INFURA_ID = "5335cfa53f7d487080f53f213e3b302c"
+const INFURA_ID = "f7400d35bb95446ebe055f70cde7ab19"
 
 const providerOptions = {
   walletconnect: {
