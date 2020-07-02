@@ -286,13 +286,15 @@ function App() {
 
     let interval;
     if(window.web3){
-      interval = setInterval(()=>{
+      interval = setInterval((web3,address,askoTokenSC,askoPresaleSC)=>{
+        if(!web3 || !address || !askoTokenSC || !askoPresaleSC) return
         fetchData(web3,address,askoTokenSC,askoPresaleSC)
-      },1500)
+      },3000)
     }else{
-      interval = setInterval(()=>{
+      interval = setInterval((web3,address,askoTokenSC,askoPresaleSC)=>{
+        if(!web3 || !address || !askoTokenSC || !askoPresaleSC) return
         fetchData(web3,address,askoTokenSC,askoPresaleSC)
-      },5000)
+      },7000)
     }
 
     setAskoTokenSC(askoTokenSC)
